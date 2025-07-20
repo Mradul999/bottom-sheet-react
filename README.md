@@ -1,12 +1,40 @@
-# React + Vite
+# 🚀 React Draggable Bottom Sheet
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A smooth, draggable bottom sheet component built using **React** and **Tailwind CSS**. This component is fully responsive and mimics the interactive bottom sheet experience seen in modern mobile apps.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+##  Features
 
-## Expanding the ESLint configuration
+-  **Mobile-Responsive**: Works on all screen sizes
+-  **Drag Support**: Works with mouse and touch
+-  **Snap Points**: Automatically snaps to nearest defined position
+-  **Spring Animation**: Smooth transition using spring physics
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+##  Tech Stack
+
+- **React**
+- **Tailwind CSS**
+
+---
+##  How to Run Locally
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/react-bottom-sheet.git
+cd react-bottom-sheet
+
+install dependencies using npm install
+
+run the developement server using npm run dev
+
+---
+
+## Deployment
+
+
+
+
