@@ -1,41 +1,18 @@
-import React from "react";
 import { useEffect, useState } from "react";
 
 const BottomSheet = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startY, setStartY] = useState(0);
   const [currentY, setCurrentY] = useState(window.innerHeight);
-  const [velocity, setVelocity] = useState(0);
+
   const snapPoints = [
     window.innerHeight * 0.65,
     window.innerHeight * 0.5,
     window.innerHeight * 0.15,
   ];
 
-  const animateTo = (target) => {
-    const damping = 0.8;
-    const stiffnes = 0.12;
-    let pos = currentY;
-    let vel = velocity;
-
-    const step = () => {
-      const displacement = target - pos;
-      const springForce = stiffnes * displacement;
-      vel = damping * (vel + springForce);
-      pos += vel;
-      setCurrentY(pos);
-
-      if (Math.abs(vel) > 0.5 || Math.abs(displacement) > 0.5) {
-        requestAnimationFrame(step);
-      } else {
-        setCurrentY(target);
-      }
-    };
-    requestAnimationFrame(step);
-  };
-
   const handleOpen = () => {
-    animateTo(snapPoints[0]);
+    setCurrentY(snapPoints[0]);
   };
 
   const snapToClosest = () => {
@@ -44,7 +21,7 @@ const BottomSheet = () => {
         ? curr
         : prev;
     });
-    animateTo(closest);
+    setCurrentY(closest);
   };
 
   const handleMouseDown = (e) => {
@@ -56,7 +33,6 @@ const BottomSheet = () => {
     const delta = e.clientY - startY;
     setStartY(e.clientY);
     setCurrentY((prev) => Math.max(snapPoints[2], prev + delta));
-    setVelocity(delta);
   };
   const handleMouseUp = () => {
     if (!isDragging) return;
@@ -74,10 +50,10 @@ const BottomSheet = () => {
     const delta = e.touches[0].clientY - startY;
     setStartY(e.touches[0].clientY);
     setCurrentY((prev) => Math.max(snapPoints[2], prev + delta));
-    setVelocity(delta);
   };
 
   const handleTouchEnd = () => {
+    if (!isDragging) return;
     setIsDragging(false);
     snapToClosest();
   };
@@ -88,7 +64,7 @@ const BottomSheet = () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [isDragging, startY, currentY]);
+  }, [isDragging, startY]);
 
   useEffect(() => {
     setCurrentY(window.innerHeight + 100);
@@ -100,13 +76,15 @@ const BottomSheet = () => {
         onClick={handleOpen}
         className="mt-6 px-6 py-2 bg-green-500 text-white font-semibold hover:bg-green-600 transition-all rounded-lg text-base"
       >
-        open bottom sheet
+        Open bottom sheet
       </button>
       <div
         className="fixed left-0 right-0 bottom-0   h-screen bg-white rounded-t-2xl shadow-xl z-50 touch-none"
         style={{
           transform: `translateY(${currentY}px)`,
-          transition: isDragging ? "none" : "transform 0.3s ease-out",
+          transition: isDragging
+            ? "none"
+            : "transform 0.6s cubic-bezier(0.22, 1.61, 0.36, 1)",
         }}
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
